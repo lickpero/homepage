@@ -1,0 +1,87 @@
+<script type="text/javascript"><!--
+starint=25;                                                 
+Colors=new Array('blue','999999','yellow','99ffff');      
+for (i = 0; i < starint; i++) {
+document.write("<DIV style='position:absolute;z_index:2;filter:Alpha(opacity=80);font-size:16pt;'ID='star"+i+"'>+</DIV>");
+}
+x=new Array();y=new Array();
+scrnx=new Array();scrny=new Array();
+dbw=document.body.clientWidth;
+dbh=document.body.clientHeight;
+for (i = 0; i < starint; i++) {do{n=0;
+x[i]=(Math.floor(Math.random()*100)-50)/10;
+y[i]=(Math.floor(Math.random()*100)-50)/10;
+if(!x&&!y)n++} while (n);
+scrnx[i]=dbw/2+x[i]*5;
+scrny[i]=dbh/2+y[i]*5;
+}
+function momeShow(){
+for (i = 0; i < starint; i++) {
+color=Math.floor(Math.random()*Colors.length)
+if(document.all){
+document.all["star"+i].style.color=Colors[color];
+document.all["star"+i].style.pixelTop=scrny[i]+document.body.scrollTop;
+document.all["star"+i].style.pixelLeft=scrnx[i]+document.body.scrollLeft;
+}else{
+document.getElementById("star"+i).style.color=Colors[color];
+document.getElementById("star"+i).style.top=scrny[i]+pageYOffset+"px";
+document.getElementById("star"+i).style.left=scrnx[i]+pageXOffset+"px";}
+if(dbw-40<scrnx[i] || 0>scrnx[i] || dbh-40<scrny[i] || 0>scrny[i]){scrnx[i]=dbw/2;scrny[i]=dbh/2;
+do{n=0;
+x[i]=(Math.floor(Math.random()*100)-50)/10;
+y[i]=(Math.floor(Math.random()*100)-50)/10;
+if(!x&&!y)n++} while (n);
+scrnx[i]=dbw/2+x[i]*5;
+scrny[i]=dbh/2+y[i]*5;
+}
+else{scrnx[i]+=x[i];scrny[i]+=y[i];x[i]=x[i]*1.1;y[i]=y[i]*1.1;}
+}}
+setInterval('momeShow()',40);/* himajin.moo.jp */
+// --></script>
+
+
+
+
+<script type="text/javascript"><!--
+R_radius=50 ;             //半径
+Colors=new Array('ff0000','00ff00','ffffff','ff00ff','0000ff','ffff00','00ff00','ffffff');
+//-----------------------------------
+X=0;Y=0;ti=0;katamuki=0;tempX=new Array(0,0);tempY=new Array(0,0);coef1=0.4;coef2=0.3;
+        for(i=0;i<Math.PI*2;i=i+0.7){
+color=Colors[Math.floor(Math.random()*Colors.length)];
+document.write("<DIV STYLE='position:absolute;font-size:8;top:-100px;left:-100px;color:"+color+"'ID='bon"+i+"'>*</DIV>");
+        }
+
+function satellite(){
+ti=ti+0.1;ti%=Math.PI*2;
+if((tempX[1]-X))
+coef1=((tempX[0]-X)>0)?(tempX[0]-X)/100+0.4:(tempX[0]-X)/100-0.4;
+if((tempY[1]-Y))
+coef2=((tempY[0]-Y)>0)?(tempY[0]-Y)/50+0.3:(tempY[0]-Y)/50-0.3;
+
+        for(i=0;i<Math.PI*2;i=i+0.7){
+t=i+ti;
+                pointX = Math.floor(X + Math.cos(t)*R_radius);
+katamuki=(pointX - X) * coef1;
+                pointY = Math.floor(Y + Math.sin(t)*R_radius*coef2)+katamuki;
+
+if(document.all){
+document.all("bon"+i).style.pixelTop=pointY+document.body.scrollTop;
+document.all("bon"+i).style.pixelLeft=pointX+document.body.scrollLeft;
+
+}else{
+document.getElementById("bon"+i).style.top=pointY+"px";
+document.getElementById("bon"+i).style.left=pointX+"px";
+}
+        }
+tempX[0]=tempX[1];
+tempY[0]=tempY[1];
+tempX[1]=X;tempY[1]=Y;
+}
+function satellite_move(NNevent){
+if(document.all){X=event.x;Y=event.y;}else{
+X= NNevent.pageX;Y= NNevent.pageY;}
+}
+document.onmousemove = satellite_move;
+setInterval("satellite()",50);/* himajin.moo.jp */
+// --></script>
